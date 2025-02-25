@@ -1,7 +1,10 @@
+import axios from "axios";
+
 import { SecretManagerServiceClient } from "@google-cloud/secret-manager";
-import axios from "axios"; // We will use axios to fetch the project ID from the metadata server
 
 const secretClient = new SecretManagerServiceClient();
+
+const GCP_SECRET_NAME = "CLOUD_FUNCTION_STOCK_PRICE";
 
 // Type definition for Express middleware
 import { Request, Response, NextFunction } from "express";
@@ -54,8 +57,12 @@ const checkApiKey = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
+  if (process.env.NODE_ENV === "development") {
+    return next();
+  }
+
   try {
-    const SECRET_KEY = await getSecretValue("MY_SECRET_KEY"); // Fetch the secret (API Key)
+    const SECRET_KEY = await getSecretValue(GCP_SECRET_NAME); // Fetch the secret (API Key)
     const apiKey = req.headers["x-api-key"]; // Get API Key from request headers
 
     if (!apiKey || apiKey !== SECRET_KEY) {
