@@ -1,0 +1,26 @@
+{
+  "name": "stock-prices",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "npm run build && functions-framework --target=getStockPriceFunction --source=dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@google-cloud/functions-framework": "^3.4.5",
+    "@google-cloud/secret-manager": "^5.6.0",
+    "axios": "^1.7.9",
+    "express": "^4.21.2",
+    "yahoo-finance2": "^2.13.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.5",
+    "typescript": "^5.7.3"
+  }
+}
